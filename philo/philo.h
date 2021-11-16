@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/04 00:46:10 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/08/04 21:46:57 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2021/11/12 20:23:09 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,21 @@
 #include <string.h>
 #include <sys/time.h>
 
-
 typedef struct	s_data
 {
+	int				muerte;
+	int				dead_philo;
 	int				num_philos;
 	long int		time_to_eat;
 	long int		time_to_sleep;
 	long int		time_to_die;
 	struct timeval	start_time;
-	long int		l_start_time;
+	long int		l_start_time; //start of the program
 	pthread_t		*thread;
 	pthread_mutex_t	*mutex;
 	int				*fork;
 	int				*fork_taken;
-	int				dead_philo;
+	//int				dead_philo;
 }				t_data;
 
 typedef struct	s_philo
@@ -62,10 +63,10 @@ typedef struct	s_philo
 	t_data			*data;
 }				t_philo;
 
-void				init_threads(char *argv[]);
-void				routine_eat(t_philo *philo);
-void				routine_sleep(t_philo *philo);
-void				routine_think(t_philo *philo);
+void					init_threads(char *argv[]);
+int						routine_eat(t_philo *philo);
+int						routine_sleep(t_philo *philo);
+int						routine_think(t_philo *philo);
 int					ft_atoi(const char *str);
 
 #endif

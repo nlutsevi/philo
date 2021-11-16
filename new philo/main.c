@@ -5,14 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/04 00:45:27 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/08/21 22:32:46 by nlutsevi         ###   ########.fr       */
+/*   Created: 2021/11/16 17:47:51 by nlutsevi          #+#    #+#             */
+/*   Updated: 2021/11/16 17:49:10 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
-
-int		main(int argc, char *argv[])
+int		main(int argc, char **argv)
 {
 	if (argc < 5)
 	{
@@ -20,8 +18,6 @@ int		main(int argc, char *argv[])
 		return (-1);
 	}
 	else
-	{
 		init_threads(argv);
-	}
 	return (0);
 }

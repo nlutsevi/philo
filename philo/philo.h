@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/04 00:46:10 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/11/12 20:23:09 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2021/11/17 20:51:36 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct	s_data
 	long int		l_start_time; //start of the program
 	pthread_t		*thread;
 	pthread_mutex_t	*mutex;
+	pthread_mutex_t	mutex_print;
 	int				*fork;
 	int				*fork_taken;
 	//int				dead_philo;

@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/04 01:30:33 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/11/16 17:47:16 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2021/11/17 21:40:18 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,13 @@ void	*philo_routine(void *arg)
 	{
 		//crear rutina comer
 		if (routine_eat(arg))
-		{
-			printf("eat\n");
 			break;
-		}
 		//crear rutina dormir
 		if (routine_sleep(arg))
-		{
-			printf("sleep\n");
 			break;
-		}
 		//crear rutina pensar
 		if (routine_think(arg))
-		{
-			printf("think\n");
 			break;
-		}
 	}
 	return (0);
 }
@@ -42,7 +33,8 @@ void	memalloc_threads(t_philo *philo, t_data *data)
 {
 	int		i;
 	
-	data->mutex = malloc(sizeof(pthread_mutex_t) * (data->num_philos + 10)); //mutex prints
+	data->mutex = malloc(sizeof(pthread_mutex_t) * (data->num_philos)); //mutex prints
+	//data->mutex_print = malloc(sizeof(pthread_mutex_t) * 1);
 	data->thread = malloc(sizeof(pthread_t) * data->num_philos);
 	data->fork = malloc(sizeof(int) * data->num_philos);
 	data->fork_taken = malloc(sizeof(int) * data->num_philos);
@@ -85,16 +77,11 @@ void	init_threads(char *argv[])
 			printf(RED"Error \n Thread%d cannot be created\n"WHITE, i);
 		if (pthread_mutex_init(&data.mutex[i], NULL) != 0)
 			printf(RED"Error \n Mutex%d cannot be created\n"WHITE, i);
-		if (philo->data->muerte != 1)
-			i++;
-	}
-	//mutex prints
-	while (i < (data.num_philos + 10))
-	{
-		if (pthread_mutex_init(&data.mutex[i], NULL) != 0)
-			printf(RED"Error \n Mutex%d cannot be created\n"WHITE, i);
 		i++;
 	}
+	//mutex prints
+	if (pthread_mutex_init(&data.mutex_print, NULL) != 0)
+		printf(RED"Error \n Mutex%d cannot be created\n"WHITE, i);
 	i = 0;
 	while (i < data.num_philos)
 	{

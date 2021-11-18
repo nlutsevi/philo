@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:51:03 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/11/16 17:54:31 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2021/11/18 21:07:16 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,6 @@
 # include <string.h>
 # include <sys/time.h>
 
-typedef struct		s_philo
-{
-	long int		taken_right_fork;
-	long int		taken_left_fork;
-	long int		start_eat;
-	long int		start_sleep;
-	long int		start_think;
-	int				num;
-	t_data			*data;
-
-}					t_philo;
-
 typedef struct		s_data
 {
 	int				muerte;
@@ -57,5 +45,28 @@ typedef struct		s_data
 	int				*fork;
 }					t_data;
 
+typedef struct		s_philo
+{
+	long int		taken_right_fork;
+	long int		taken_left_fork;
+	long int		start_eat;
+	long int		start_sleep;
+	long int		start_think;
+	int				num;
+	t_data			*data;
+
+}					t_philo;
+
+int					ft_atoi(const char *str);
+void				init_threads(char **argv);
+long int			get_time(void);
+void				philo_died(t_philo *philo);
+void				*philo_routine(void *arg);
+int					routine_eat(t_philo *philo);
+int					philo_takes_forks(t_philo *philo);
+int					philo_takes_right_fork(t_philo *philo);
+int					philo_starts_eat(t_philo *philo);
+void				print_left_fork(t_philo *philo);
+void				print_right_fork(t_philo *philo);
 
 #endif

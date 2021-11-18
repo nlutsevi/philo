@@ -12,41 +12,6 @@
 
 #include "philo.h"
 
-int	philo_takes_left_fork(t_philo *philo)
-{
-	long int	time;
-
-	//coge el tenedor de la izquierda
-	if (pthread_mutex_lock(&philo->data->mutex[philo->num]) != 0)
-		return (1);
-	gettimeofday(&philo->taken_left_fork, NULL);
-	if (philo->l_taken_left_fork != 0)
-	{
-		philo->l_taken_left_fork = (philo->taken_left_fork.tv_sec * 1000) + (philo->taken_left_fork.tv_usec / 1000);
-		if ((philo->l_taken_left_fork - philo->l_start_eat) > philo->data->time_to_die)
-		{
-			time = philo->l_taken_left_fork - philo->data->l_start_time;
-			pthread_mutex_lock(&philo->data->mutex_print);
-			if (philo->data->muerte != 1)
-				printf(RED"%ldms Philo%d died\n"WHITE, time, (philo->num + 1));
-			philo->data->muerte = 1;
-			pthread_mutex_unlock(&philo->data->mutex_print);
-			return (1);
-		}
-	}
-	else
-		philo->l_taken_left_fork = (philo->taken_left_fork.tv_sec * 1000) + (philo->taken_left_fork.tv_usec / 1000);
-	time = philo->l_taken_left_fork - philo->data->l_start_time;
-	pthread_mutex_lock(&philo->data->mutex_print);
-	if (philo->data->muerte != 1)
-		printf(YELLOW"%ldms Philo%d has taken a fork(left)\n"WHITE, time, (philo->num + 1));
-	pthread_mutex_unlock(&philo->data->mutex_print);
-	//ponemos las variables tenedor y tenedor cogido en 1
-	philo->data->fork[philo->num] = 1;
-	philo->data->fork_taken[philo->num] = 1;
-	return (0);
-}
-
 int	philo_takes_right_fork(t_philo *philo)
 {
 	long int	time;
@@ -98,6 +63,44 @@ int	philo_takes_right_fork(t_philo *philo)
 	return (0);
 }
 
+int	philo_takes_left_fork(t_philo *philo)
+{
+	long int	time;
+
+	//coge el tenedor de la izquierda
+	if (pthread_mutex_lock(&philo->data->mutex[philo->num]) != 0)
+		return (1);
+	gettimeofday(&philo->taken_left_fork, NULL);
+	if (philo->l_taken_left_fork != 0)
+	{
+		philo->l_taken_left_fork = (philo->taken_left_fork.tv_sec * 1000) + (philo->taken_left_fork.tv_usec / 1000);
+		if ((philo->l_taken_left_fork - philo->l_start_eat) > philo->data->time_to_die)
+		{
+			time = philo->l_taken_left_fork - philo->data->l_start_time;
+			pthread_mutex_lock(&philo->data->mutex_print);
+			if (philo->data->muerte != 1)
+				printf(RED"%ldms Philo%d died\n"WHITE, time, (philo->num + 1));
+			philo->data->muerte = 1;
+			pthread_mutex_unlock(&philo->data->mutex_print);
+			return (1);
+		}
+	}
+	else
+		philo->l_taken_left_fork = (philo->taken_left_fork.tv_sec * 1000) + (philo->taken_left_fork.tv_usec / 1000);
+	time = philo->l_taken_left_fork - philo->data->l_start_time;
+	pthread_mutex_lock(&philo->data->mutex_print);
+	if (philo->data->muerte != 1)
+		printf(YELLOW"%ldms Philo%d has taken a fork(left)\n"WHITE, time, (philo->num + 1));
+	pthread_mutex_unlock(&philo->data->mutex_print);
+	if (philo_takes_right_fork(philo))
+		return (1);
+	//ponemos las variables tenedor y tenedor cogido en 1
+	philo->data->fork[philo->num] = 1;
+	philo->data->fork_taken[philo->num] = 1;
+	return (0);
+}
+
+
 int	routine_eat(t_philo *philo)
 {
 	long int	time;
@@ -107,8 +110,8 @@ int	routine_eat(t_philo *philo)
 	//se cogen los cubiertos
 	if (philo_takes_left_fork(philo))
 		return (1);
-	if (philo_takes_right_fork(philo))
-		return (1);
+	// if (philo_takes_right_fork(philo))
+	// 	return (1);
 	
 	//empieza a comer
 	gettimeofday(&philo->start_eat, NULL);

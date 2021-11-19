@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:49:58 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/11/18 20:58:48 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2021/11/19 06:05:23 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,8 @@ void		init_vars(char **argv, t_data *data)
 	data->start_time = 0;
 }
 
-void		memalloc(t_philo *philo, t_data *data)
+void		memalloc(t_data *data)
 {
-	philo = malloc(sizeof(t_philo) * data->num_philos);
 	data->mutex = malloc(sizeof(pthread_mutex_t) * (data->num_philos));
 	data->thread = malloc(sizeof(pthread_t) * data->num_philos);
 	data->fork = malloc(sizeof(int) * data->num_philos);
@@ -38,13 +37,13 @@ void		init_vars_philos(t_data *data, t_philo *philo)
 	while (i < data->num_philos)
 	{
 		data->fork[i] = 0;
-		philo[i].taken_left_fork = 0;
 		philo[i].taken_right_fork = 0;
+		philo[i].taken_left_fork = 0;
 		philo[i].start_eat = 0;
 		philo[i].start_sleep = 0;
 		philo[i].start_think = 0;
 		philo[i].data = data;
-		philo[i].num = i + 1;
+		philo[i].num = i;
 		i++;
 	}
 }
@@ -67,19 +66,34 @@ void		pthread_creation(t_data *data, t_philo *philo)
 	i = 0;
 	while (i < data->num_philos)
 	{
-		pthread_join(data->thread[i], NULL);
+		if (pthread_join(data->thread[i], NULL) != 0)
+			printf(RED"Error \n Thread%d cannot be joined\n"WHITE, i);
 		i++;
 	}
 }
 
+// void		pthreads_join(t_data *data)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (i < data->num_philos)
+// 	{
+// 		pthread_join(data->thread[i], NULL);
+// 		i++;
+// 	}
+// }
+
 void		init_threads(char **argv)
 {
 	t_data	data;
-	t_philo	philo;
+	t_philo	*philo;
 
+	philo = malloc(sizeof(t_philo) * data.num_philos);
+	memalloc(&data);
 	init_vars(argv, &data);
 	data.start_time = get_time();
-	memalloc(&philo, &data);
-	init_vars_philos(&data, &philo);
-	pthread_creation(&data, &philo);
+	init_vars_philos(&data, philo);
+	pthread_creation(&data, philo);
+	//pthreads_join(&data);
 }

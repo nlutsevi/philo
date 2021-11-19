@@ -12,7 +12,7 @@ OBJ= ${SRCS:.c=.o}
 
 CC = gcc
 RM = rm -rf
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra #-g -fsanitize=address
 
 .c.o:
 		${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
@@ -28,8 +28,7 @@ clean:
 
 fclean:	clean
 		@${RM} ${NAME}
-		@${RM} philo
-		@${RM} srcs/*.o
+		@${RM} *.o
 
 re: fclean all
 

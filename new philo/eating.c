@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 20:37:30 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/11/19 21:39:16 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2021/11/20 01:56:53 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ void	print_eating(t_philo *philo)
 {
 	long int	time;
 
-	time = philo[philo->num].start_eat - data->start_time;
+	time = philo[philo->num].start_eat - philo->data->start_time;
 	pthread_mutex_lock(&philo->data->mutex_print);
 	if (philo->data->muerte != 1)
-		printf(GREEN"%ldms Philo%d is eating\n"WHITE, time, (philo->philo->num + 1));
+		printf(GREEN"%ldms Philo%d is eating\n"WHITE, time, (philo->num + 1));
 	pthread_mutex_unlock(&philo->data->mutex_print);
 }
 
@@ -29,8 +29,8 @@ int		philo_starts_eat(t_philo *philo)
 
 	last_time = philo[philo->num].start_eat;
 	philo[philo->num].start_eat = get_time();
-	if (((last_time == 0) && ((philo[philo->num].start_eat - data->start_time) > data->time_to_die)) \
-		|| ((philo[philo->num].start_eat - last_time) > data->time_to_die))
+	if (((last_time == 0) && ((philo[philo->num].start_eat - philo->data->start_time) > philo->data->time_to_die)) \
+		|| ((philo[philo->num].start_eat - last_time) > philo->data->time_to_die))
 	{
 		philo_died(philo);
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:49:58 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/11/19 21:24:04 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2021/11/20 04:32:26 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void		pthread_creation(t_data *data)
 	i = 0;
 	while (i < data->num_philos)
 	{
+		
 		if (pthread_mutex_init(&data->philo[i].mutex_fork, NULL) != 0)
 			printf(RED"Error \n Mutex%d cannot be created\n"WHITE, i);
 		

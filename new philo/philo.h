@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:51:03 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/11/22 06:55:32 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2021/11/22 18:40:43 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,8 @@ typedef struct s_data t_data;
 
 typedef struct		s_philo
 {
-	int				fork;
 	pthread_mutex_t	mutex_fork;
 	pthread_t		thread;
-	// long int		taken_right_fork;
-	// long int		taken_left_fork;
-	// long int		start_eat;
-	// long int		start_sleep;
-	// long int		start_think;
 	long int		last_eat;
 	int				num;
 	t_data			*data;

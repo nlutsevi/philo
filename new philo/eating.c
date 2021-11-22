@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 20:37:30 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/11/22 06:57:19 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2021/11/22 18:58:42 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,10 @@ void	print_eating(t_philo *philo)
 
 int		philo_starts_eat(t_philo *philo, int right_hand)
 {
-	// long int	last_time;
-
-	// last_time = philo[philo->num].start_eat;
-	// philo[philo->num].start_eat = get_time();
+	printf("hola\n");
 	philo->last_eat = get_time();
 	print_eating(philo);
-	usleep(philo->data->time_to_eat * 1000);
+	usleep(philo->data->time_to_eat);
 	pthread_mutex_unlock(&philo->mutex_fork);
 	pthread_mutex_unlock(&philo->data->philo[right_hand].mutex_fork);
 	return (0);

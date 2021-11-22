@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:49:58 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/11/22 07:05:36 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2021/11/22 19:03:37 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,7 @@ void		init_vars_philos(t_data *data)
 	i = 0;
 	while (i < data->num_philos)
 	{
-		//data->philo[i].data = data;
-		data->philo[i].fork = 0;
-		// data->philo[i].taken_right_fork = 0;
-		// data->philo[i].taken_left_fork = 0;
 		data->philo[i].last_eat = 0;
-		// data->philo[i].start_eat = 0;
-		// data->philo[i].start_sleep = 0;
-		// data->philo[i].start_think = 0;
 		data->philo[i].num = i;
 		i++;
 	}
@@ -86,8 +79,6 @@ void		init_threads(char **argv)
 
 	init_vars(argv, &data);
 	data.philo = malloc(sizeof(t_philo) * data.num_philos);
-
-
 	init_vars_philos(&data);
 	mutex_init(&data);
 	pthread_creation(&data);

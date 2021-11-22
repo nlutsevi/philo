@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:49:58 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/11/20 04:32:26 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2021/11/22 07:05:36 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void		init_vars(char **argv, t_data *data)
 	data->time_to_die = ft_atoi(argv[2]);
 	data->time_to_sleep = ft_atoi(argv[3]);
 	data->time_to_eat = ft_atoi(argv[4]);
-	data->start_time = 0;
+	data->start_time = get_time();
 }
 
 void		init_vars_philos(t_data *data)
@@ -31,13 +31,29 @@ void		init_vars_philos(t_data *data)
 	{
 		//data->philo[i].data = data;
 		data->philo[i].fork = 0;
-		data->philo[i].taken_right_fork = 0;
-		data->philo[i].taken_left_fork = 0;
-		data->philo[i].start_eat = 0;
-		data->philo[i].start_sleep = 0;
-		data->philo[i].start_think = 0;
+		// data->philo[i].taken_right_fork = 0;
+		// data->philo[i].taken_left_fork = 0;
+		data->philo[i].last_eat = 0;
+		// data->philo[i].start_eat = 0;
+		// data->philo[i].start_sleep = 0;
+		// data->philo[i].start_think = 0;
 		data->philo[i].num = i;
 		i++;
+	}
+}
+
+void		mutex_init(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	if (pthread_mutex_init(&data->mutex_print, NULL) != 0)
+		printf(RED"Error \n print_mutex cannot be created\n"WHITE);
+	while (i < data->num_philos)
+	{
+		if (pthread_mutex_init(&data->philo[i].mutex_fork, NULL) != 0)
+			printf(RED"Error \n Mutex%d cannot be created\n"WHITE, i);
+		i++;	
 	}
 }
 
@@ -45,25 +61,18 @@ void		pthread_creation(t_data *data)
 {
 	int	i;
 
-	if (pthread_mutex_init(&data->mutex_print, NULL) != 0)
-		printf(RED"Error \n print_mutex cannot be created\n"WHITE);
 
 	i = 0;
 	while (i < data->num_philos)
 	{
-		
-		if (pthread_mutex_init(&data->philo[i].mutex_fork, NULL) != 0)
-			printf(RED"Error \n Mutex%d cannot be created\n"WHITE, i);
-		
 		data->philo[i].data = data;
-
 		if (pthread_create(&data->philo[i].thread, NULL, philo_routine, &data->philo[i]) != 0)
 			printf(RED"Error \n Thread%d cannot be created\n"WHITE, i);
-
 		i++;
 	}
+	check_death(data);
 	i = 0;
-	while (i < data->num_philos)
+	while (i < data->num_philos && data->muerte == 0)
 	{
 		if (pthread_join(data->philo[i].thread, NULL) != 0)
 			printf(RED"Error \n Thread%d cannot be joined\n"WHITE, i);
@@ -77,9 +86,9 @@ void		init_threads(char **argv)
 
 	init_vars(argv, &data);
 	data.philo = malloc(sizeof(t_philo) * data.num_philos);
-	data.start_time = get_time();
 
 
 	init_vars_philos(&data);
+	mutex_init(&data);
 	pthread_creation(&data);
 }

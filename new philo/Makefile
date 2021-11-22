@@ -6,7 +6,8 @@ SRCS=	eating.c \
 		main.c \
 		routines.c \
 		taking_forks.c \
-		time.c
+		time.c \
+		death.c
 
 OBJ= ${SRCS:.c=.o}
 

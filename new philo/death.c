@@ -1,38 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   eating.c                                           :+:      :+:    :+:   */
+/*   death.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/18 20:37:30 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/11/22 06:57:19 by nlutsevi         ###   ########.fr       */
+/*   Created: 2021/11/22 06:42:10 by nlutsevi          #+#    #+#             */
+/*   Updated: 2021/11/22 07:13:20 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	print_eating(t_philo *philo)
+void	philo_died(t_philo *philo)
 {
 	long int	time;
 
 	time = get_time() - philo->data->start_time;
 	pthread_mutex_lock(&philo->data->mutex_print);
 	if (philo->data->muerte != 1)
-		printf(GREEN"%ldms Philo%d is eating\n"WHITE, time, (philo->num + 1));
+		printf(RED"%ldms Philo%d died\n"WHITE, time, (philo->data->philo->num + 1));
+	philo->data->muerte = 1;
 	pthread_mutex_unlock(&philo->data->mutex_print);
 }
 
-int		philo_starts_eat(t_philo *philo, int right_hand)
+void	check_death(t_data *data)
 {
-	// long int	last_time;
+	int	i;
+	long int	time;
 
-	// last_time = philo[philo->num].start_eat;
-	// philo[philo->num].start_eat = get_time();
-	philo->last_eat = get_time();
-	print_eating(philo);
-	usleep(philo->data->time_to_eat * 1000);
-	pthread_mutex_unlock(&philo->mutex_fork);
-	pthread_mutex_unlock(&philo->data->philo[right_hand].mutex_fork);
-	return (0);
+	while (1)
+	{
+		i = 0;
+		while (i < data->num_philos)
+		{
+			time = data->start_time - data->philo[i].last_eat;
+			if (time >= data->time_to_die)
+			{
+				philo_died(data->philo);
+				data->muerte = 1;
+				break;
+			}
+			i++;
+		}
+		if (data->muerte == 1)
+			break;
+		usleep(100);
+	}
 }

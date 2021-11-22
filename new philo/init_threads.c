@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:49:58 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/11/22 19:03:37 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2021/11/22 20:55:08 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void		init_vars(char **argv, t_data *data)
 {
 	data->muerte = 0;
+	data->pair = 0;
 	data->num_philos = ft_atoi(argv[1]);
 	data->time_to_die = ft_atoi(argv[2]);
 	data->time_to_sleep = ft_atoi(argv[3]);
@@ -27,26 +28,15 @@ void		init_vars_philos(t_data *data)
 	int	i;
 
 	i = 0;
-	while (i < data->num_philos)
-	{
-		data->philo[i].last_eat = 0;
-		data->philo[i].num = i;
-		i++;
-	}
-}
-
-void		mutex_init(t_data *data)
-{
-	int	i;
-
-	i = 0;
 	if (pthread_mutex_init(&data->mutex_print, NULL) != 0)
 		printf(RED"Error \n print_mutex cannot be created\n"WHITE);
 	while (i < data->num_philos)
 	{
 		if (pthread_mutex_init(&data->philo[i].mutex_fork, NULL) != 0)
 			printf(RED"Error \n Mutex%d cannot be created\n"WHITE, i);
-		i++;	
+		data->philo[i].last_eat = data->start_time;
+		data->philo[i].num = i + 1;
+		i++;
 	}
 }
 
@@ -80,6 +70,5 @@ void		init_threads(char **argv)
 	init_vars(argv, &data);
 	data.philo = malloc(sizeof(t_philo) * data.num_philos);
 	init_vars_philos(&data);
-	mutex_init(&data);
 	pthread_creation(&data);
 }

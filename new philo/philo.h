@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:51:03 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/11/22 18:40:43 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2021/11/22 20:34:41 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct		s_data
 {
 	int				muerte;
 	int				num_philos;
+	int				pair;
 	long int		time_to_die;
 	long int		time_to_sleep;
 	long int		time_to_eat;
@@ -58,14 +59,13 @@ typedef struct		s_data
 int					ft_atoi(const char *str);
 void				init_threads(char **argv);
 long int			get_time(void);
+void				ft_usleep(long int time, t_data *data);
 void				philo_died(t_philo *philo);
 void				*philo_routine(void *arg);
-int					routine_eat(t_philo *philo);
-int					philo_takes_forks(t_philo *philo, int right_hand);
-int					philo_takes_right_fork(t_philo *philo, int right_hand);
-int					philo_starts_eat(t_philo *philo, int right_hand);
+void				routine_eat(t_philo *philo);
 void				print_left_fork(t_philo *philo);
 void				print_right_fork(t_philo *philo);
 void				check_death(t_data *data);
+void				print_eating(t_philo *philo);
 
 #endif

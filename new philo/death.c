@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 06:42:10 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/11/22 07:13:20 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2021/11/22 20:55:43 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,6 @@ void	check_death(t_data *data)
 		}
 		if (data->muerte == 1)
 			break;
-		usleep(100);
+		ft_usleep(100, data);
 	}
 }

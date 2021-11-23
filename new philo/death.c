@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 06:42:10 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/11/23 03:24:55 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2021/11/23 03:41:45 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,4 @@ void	check_death(t_data *data)
 			break;
 		ft_usleep(100, data);
 	}
-}
-
-void	check_death2(t_data *data, int philo_num)
-{
-	long int	time;
-
-	time = data->start_time - data->philo[philo_num].last_eat;
-	if (time >= data->time_to_die)
-		philo_died(data->philo);
 }

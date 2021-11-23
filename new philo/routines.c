@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 20:59:59 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/11/23 03:39:29 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2021/11/23 03:41:35 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ void		routine_eat(t_philo *philo)
 		print_left_fork(philo);
 	}
 	philo->last_eat = get_time();
-	//check_death2(philo->data, philo->num - 1);
 	print_eating(philo);
 	usleep(philo->data->time_to_eat * 1000);
 	pthread_mutex_unlock(&philo->mutex_fork);
@@ -70,7 +69,6 @@ void	routine_sleep(t_philo *philo)
 {
 	long int	time;
 
-	//check_death2(philo->data, philo->num - 1);
 	time = get_time() - philo->data->start_time;
 	pthread_mutex_lock(&philo->data->mutex_print);
 	if (philo->data->muerte != 1)
@@ -83,7 +81,6 @@ void	routine_think(t_philo *philo)
 {
 	long int	time;
 
-	//check_death2(philo->data, philo->num - 1);
 	time = get_time() - philo->data->start_time;
 	pthread_mutex_lock(&philo->data->mutex_print);
 	if (philo->data->muerte != 1)

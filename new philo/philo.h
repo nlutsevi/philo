@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:51:03 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/11/22 20:34:41 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2021/11/23 03:26:59 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,14 @@ void				init_threads(char **argv);
 long int			get_time(void);
 void				ft_usleep(long int time, t_data *data);
 void				philo_died(t_philo *philo);
+void				check_death2(t_data *data, int philo_num);
 void				*philo_routine(void *arg);
 void				routine_eat(t_philo *philo);
 void				print_left_fork(t_philo *philo);
 void				print_right_fork(t_philo *philo);
 void				check_death(t_data *data);
 void				print_eating(t_philo *philo);
+void				routine_sleep(t_philo *philo);
+void				routine_think(t_philo *philo);
 
 #endif

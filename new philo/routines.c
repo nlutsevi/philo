@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 20:59:59 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/11/23 03:41:35 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2021/11/24 05:23:29 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,19 @@ void	*philo_routine(void *arg)
 		routine_eat(philo);
 		routine_sleep(philo);
 		routine_think(philo);
-	}
+	}	
 	return (0);
+}
+
+void			one_and_only(t_philo *philo)
+{
+	if (philo->data->num_philos == 1)
+	{
+		pthread_mutex_lock(&philo->mutex_fork);
+		print_left_fork(philo);
+		usleep(philo->data->time_to_die * 1000);
+		philo_died(philo);
+	}
 }
 
 void		routine_eat(t_philo *philo)
@@ -37,13 +48,7 @@ void		routine_eat(t_philo *philo)
 	right_hand = philo->num;
 	if (right_hand == philo->data->num_philos)
 		right_hand = 0;
-	if (philo->data->num_philos == 1)
-	{
-		pthread_mutex_lock(&philo->mutex_fork);
-		print_left_fork(philo);
-		usleep(philo->data->time_to_die * 1000);
-		philo_died(philo);
-	}
+	one_and_only(philo);
 	if (philo->data->pair)
 	{
 		pthread_mutex_lock(&philo->mutex_fork);

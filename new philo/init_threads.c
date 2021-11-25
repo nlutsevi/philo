@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:49:58 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/11/24 05:23:40 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2021/11/25 02:08:34 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void		init_vars(char **argv, t_data *data)
 	data->time_to_die = ft_atoi(argv[2]);
 	data->time_to_sleep = ft_atoi(argv[3]);
 	data->time_to_eat = ft_atoi(argv[4]);
-	data->start_time = get_time();
 }
 
 void		init_vars_philos(t_data *data)
@@ -28,6 +27,7 @@ void		init_vars_philos(t_data *data)
 	int	i;
 
 	i = 0;
+	data->start_time = get_time();
 	if (pthread_mutex_init(&data->mutex_print, NULL) != 0)
 		printf(RED"Error \n print_mutex cannot be created\n"WHITE);
 	while (i < data->num_philos)
@@ -71,4 +71,5 @@ void		init_threads(char **argv)
 	data.philo = malloc(sizeof(t_philo) * data.num_philos);
 	init_vars_philos(&data);
 	pthread_creation(&data);
+	free(data.philo);
 }

@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 20:25:11 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/11/22 19:54:22 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2021/11/25 01:49:51 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@ void		ft_usleep(long int time, t_data *data)
 {
 	long int	start_time;
 
-	start_time = data->start_time;
-	while ((data->start_time - start_time) < time)
+	(void)data;
+	start_time = get_time();
+	//maprintf("%ld\n", (get_time() - start_time));
+	while ((get_time() - start_time) < time)
 		usleep(100);
 }
 

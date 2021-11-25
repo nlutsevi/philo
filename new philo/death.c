@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 06:42:10 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/11/24 05:36:40 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2021/11/25 04:41:55 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	philo_died(t_philo *philo)
 	time = get_time() - philo->data->start_time;
 	pthread_mutex_lock(&philo->data->mutex_print);
 	if (philo->data->muerte != 1)
-		printf(RED"%ldms Philo%d died\n"WHITE, time, (philo->data->philo->num + 1));
+		printf(RED"%ldms Philo%d died\n"WHITE, time, philo->data->philo->num);
 	philo->data->muerte = 1;
 	pthread_mutex_unlock(&philo->data->mutex_print);
 }
@@ -27,7 +27,6 @@ void	philo_died(t_philo *philo)
 void	check_death(t_data *data)
 {
 	int	i;
-	long int	time;
 
 	while (1)
 	{
@@ -36,10 +35,9 @@ void	check_death(t_data *data)
 		{
 			if (data->philo[i].last_eat != data->start_time)
 			{
-				time = get_time() - data->philo[i].last_eat;
-				//printf("time: %ld\n", time);
-				if (time >= data->time_to_die)
+				if (data->philo[i].last_eat >= data->time_to_die)
 				{
+					//printf("last_eat %ld\n", data->philo[i].last_eat);
 					philo_died(data->philo);
 					break;
 				}
@@ -48,7 +46,7 @@ void	check_death(t_data *data)
 		}
 		if (data->muerte == 1)
 			break;
-		usleep(100000);
+		ft_usleep(100, data);
 	}
 }
 

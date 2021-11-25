@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 20:59:59 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/11/24 05:23:29 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2021/11/25 04:41:50 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,15 @@ void	*philo_routine(void *arg)
 	return (0);
 }
 
-void			one_and_only(t_philo *philo)
+void		one_and_only(t_philo *philo)
 {
 	if (philo->data->num_philos == 1)
 	{
 		pthread_mutex_lock(&philo->mutex_fork);
 		print_left_fork(philo);
-		usleep(philo->data->time_to_die * 1000);
+		ft_usleep(philo->data->time_to_die, philo->data);
 		philo_died(philo);
+		philo->data->muerte = 1;
 	}
 }
 
@@ -52,20 +53,28 @@ void		routine_eat(t_philo *philo)
 	if (philo->data->pair)
 	{
 		pthread_mutex_lock(&philo->mutex_fork);
-		print_left_fork(philo);
 		pthread_mutex_lock(&philo->data->philo[right_hand].mutex_fork);
+		print_left_fork(philo);
 		print_right_fork(philo);
 	}
 	else
 	{
 		pthread_mutex_lock(&philo->data->philo[right_hand].mutex_fork);
-		print_right_fork(philo);
 		pthread_mutex_lock(&philo->mutex_fork);
+		print_right_fork(philo);
 		print_left_fork(philo);
 	}
-	philo->last_eat = get_time();
-	print_eating(philo);
-	usleep(philo->data->time_to_eat * 1000);
+	if (philo->last_eat == philo->data->start_time)
+	{
+		print_eating(philo);
+		philo->last_eat = philo->last_eat + 0.0000000001;
+	}
+	else
+	{
+		philo->last_eat = get_time() - philo->data->start_time - philo->last_eat;
+		print_eating(philo);
+	}
+	ft_usleep(philo->data->time_to_eat, philo->data);
 	pthread_mutex_unlock(&philo->mutex_fork);
 	pthread_mutex_unlock(&philo->data->philo[right_hand].mutex_fork);
 }
@@ -79,7 +88,7 @@ void	routine_sleep(t_philo *philo)
 	if (philo->data->muerte != 1)
 		printf(CYAN"%ldms Philo%d is sleeping\n"WHITE, time, philo->num);
 	pthread_mutex_unlock(&philo->data->mutex_print);
-	usleep(philo->data->time_to_sleep * 1000);
+	ft_usleep(philo->data->time_to_sleep, philo->data);
 }
 
 void	routine_think(t_philo *philo)

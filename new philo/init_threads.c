@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:49:58 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/11/25 02:08:34 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2021/11/26 04:08:09 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void		init_vars(char **argv, t_data *data)
 	data->pair = 0;
 	data->num_philos = ft_atoi(argv[1]);
 	data->time_to_die = ft_atoi(argv[2]);
-	data->time_to_sleep = ft_atoi(argv[3]);
-	data->time_to_eat = ft_atoi(argv[4]);
+	data->time_to_eat = ft_atoi(argv[3]);
+	data->time_to_sleep = ft_atoi(argv[4]);
 }
 
 void		init_vars_philos(t_data *data)
@@ -34,7 +34,7 @@ void		init_vars_philos(t_data *data)
 	{
 		if (pthread_mutex_init(&data->philo[i].mutex_fork, NULL) != 0)
 			printf(RED"Error \n Mutex%d cannot be created\n"WHITE, i);
-		data->philo[i].last_eat = data->start_time;
+		data->philo[i].last_eat = 0;
 		data->philo[i].num = i + 1;
 		i++;
 	}

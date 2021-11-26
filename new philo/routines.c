@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 20:59:59 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/11/25 04:41:50 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2021/11/26 05:32:09 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,19 +64,24 @@ void		routine_eat(t_philo *philo)
 		print_right_fork(philo);
 		print_left_fork(philo);
 	}
-	if (philo->last_eat == philo->data->start_time)
-	{
-		print_eating(philo);
-		philo->last_eat = philo->last_eat + 0.0000000001;
-	}
-	else
-	{
-		philo->last_eat = get_time() - philo->data->start_time - philo->last_eat;
-		print_eating(philo);
-	}
+	philo->last_eat = get_time() - philo->data->start_time;
+	// if (philo->last_eat == 0)
+	// 	philo->last_eat = get_time() - philo->data->start_time;
+	// else
+	// 	philo->last_eat = get_time() - philo->data->start_time - philo->last_eat;
+	print_eating(philo);
 	ft_usleep(philo->data->time_to_eat, philo->data);
 	pthread_mutex_unlock(&philo->mutex_fork);
 	pthread_mutex_unlock(&philo->data->philo[right_hand].mutex_fork);
+// philo->last_eat = get_time() - philo->data->start_time - philo->last_eat;
+// 		print_eating(philo);
+// 		ft_usleep(philo->data->time_to_eat, philo->data);
+// 		pthread_mutex_unlock(&philo->mutex_fork);
+// 		pthread_mutex_unlock(&philo->data->philo[right_hand].mutex_fork);
+// 	}
+	// ft_usleep(philo->data->time_to_eat, philo->data);
+	// pthread_mutex_unlock(&philo->mutex_fork);
+	// pthread_mutex_unlock(&philo->data->philo[right_hand].mutex_fork);
 }
 
 void	routine_sleep(t_philo *philo)

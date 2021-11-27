@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 20:59:59 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/11/26 05:32:09 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2021/11/26 23:52:55 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	*philo_routine(void *arg)
 
 void		one_and_only(t_philo *philo)
 {
-	if (philo->data->num_philos == 1)
+	if (philo->data->num_philos == 1 || (philo->meals_num == philo->data->total_meals))
 	{
 		pthread_mutex_lock(&philo->mutex_fork);
 		print_left_fork(philo);
@@ -65,23 +65,11 @@ void		routine_eat(t_philo *philo)
 		print_left_fork(philo);
 	}
 	philo->last_eat = get_time() - philo->data->start_time;
-	// if (philo->last_eat == 0)
-	// 	philo->last_eat = get_time() - philo->data->start_time;
-	// else
-	// 	philo->last_eat = get_time() - philo->data->start_time - philo->last_eat;
 	print_eating(philo);
+	philo->meals_num++;
 	ft_usleep(philo->data->time_to_eat, philo->data);
 	pthread_mutex_unlock(&philo->mutex_fork);
 	pthread_mutex_unlock(&philo->data->philo[right_hand].mutex_fork);
-// philo->last_eat = get_time() - philo->data->start_time - philo->last_eat;
-// 		print_eating(philo);
-// 		ft_usleep(philo->data->time_to_eat, philo->data);
-// 		pthread_mutex_unlock(&philo->mutex_fork);
-// 		pthread_mutex_unlock(&philo->data->philo[right_hand].mutex_fork);
-// 	}
-	// ft_usleep(philo->data->time_to_eat, philo->data);
-	// pthread_mutex_unlock(&philo->mutex_fork);
-	// pthread_mutex_unlock(&philo->data->philo[right_hand].mutex_fork);
 }
 
 void	routine_sleep(t_philo *philo)

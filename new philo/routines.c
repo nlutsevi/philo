@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 20:59:59 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/11/26 23:52:55 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2021/11/27 04:17:51 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,11 @@ void	*philo_routine(void *arg)
 {
 	t_philo	*philo;
 
-	philo = (t_philo*)arg;
-
+	philo = (t_philo *)arg;
 	if (philo->num % 2 == 0)
 		philo->data->pair = 1;
-
-	while (philo->data->muerte == 0)
+	while (philo->data->muerte == 0 || \
+		(philo->meals_num == philo->data->total_meals))
 	{
 		routine_eat(philo);
 		routine_sleep(philo);
@@ -30,9 +29,9 @@ void	*philo_routine(void *arg)
 	return (0);
 }
 
-void		one_and_only(t_philo *philo)
+void	one_and_only(t_philo *philo)
 {
-	if (philo->data->num_philos == 1 || (philo->meals_num == philo->data->total_meals))
+	if (philo->data->num_philos == 1)
 	{
 		pthread_mutex_lock(&philo->mutex_fork);
 		print_left_fork(philo);
@@ -42,7 +41,7 @@ void		one_and_only(t_philo *philo)
 	}
 }
 
-void		routine_eat(t_philo *philo)
+void	routine_eat(t_philo *philo)
 {
 	int			right_hand;
 
@@ -51,19 +50,9 @@ void		routine_eat(t_philo *philo)
 		right_hand = 0;
 	one_and_only(philo);
 	if (philo->data->pair)
-	{
-		pthread_mutex_lock(&philo->mutex_fork);
-		pthread_mutex_lock(&philo->data->philo[right_hand].mutex_fork);
-		print_left_fork(philo);
-		print_right_fork(philo);
-	}
+		eat_pair(philo, right_hand);
 	else
-	{
-		pthread_mutex_lock(&philo->data->philo[right_hand].mutex_fork);
-		pthread_mutex_lock(&philo->mutex_fork);
-		print_right_fork(philo);
-		print_left_fork(philo);
-	}
+		eat_odd(philo, right_hand);
 	philo->last_eat = get_time() - philo->data->start_time;
 	print_eating(philo);
 	philo->meals_num++;
@@ -94,5 +83,3 @@ void	routine_think(t_philo *philo)
 		printf(GRAY"%ldms Philo%d is thinking\n"WHITE, time, philo->num);
 	pthread_mutex_unlock(&philo->data->mutex_print);
 }
-
-

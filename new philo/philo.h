@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:51:03 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/11/27 04:16:24 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2021/11/29 21:26:32 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_philo
 
 typedef struct s_data
 {
+	int				meals_over;
 	int				muerte;
 	int				num_philos;
 	int				pair;

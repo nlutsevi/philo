@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 06:42:10 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/11/27 04:00:49 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2021/11/29 21:56:52 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,17 @@ void	check_death(t_data *data)
 			}
 			i++;
 		}
-		if (data->muerte == 1)
+		i = 0;
+		if (data->muerte == 1 || data->meals_over == 1)
+		{
+			// while (i < data->num_philos)
+			// {
+			// 	pthread_detach(data->philo[i].thread);
+			// 	pthread_mutex_destroy(&data->philo[i].mutex_fork);
+			// 	i++;
+			// }
 			break ;
+		}
 		usleep(100);
 	}
 }

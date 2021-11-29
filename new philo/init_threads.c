@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:49:58 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/11/27 04:03:22 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2021/11/29 22:06:58 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	init_vars(int argc, char **argv, t_data *data)
 {
 	data->muerte = 0;
 	data->pair = 0;
+	data->meals_over = 0;
 	data->num_philos = ft_atoi(argv[1]);
 	data->time_to_die = ft_atoi(argv[2]);
 	data->time_to_eat = ft_atoi(argv[3]);
@@ -54,6 +55,8 @@ void	pthread_creation(t_data *data)
 		if (pthread_create(&data->philo[i].thread, NULL, \
 				philo_routine, &data->philo[i]) != 0)
 			printf(RED"Error \n Thread%d cannot be created\n"WHITE, i);
+		// pthread_detach(data->philo[i].thread);
+		// pthread_mutex_destroy(&data->philo[i].mutex_fork);
 		i++;
 	}
 	check_death(data);
@@ -62,6 +65,15 @@ void	pthread_creation(t_data *data)
 	{
 		if (pthread_join(data->philo[i].thread, NULL) != 0)
 			printf(RED"Error \n Thread%d cannot be joined\n"WHITE, i);
+		i++;
+	}
+	i = 0;
+	while (i < data->num_philos)
+	{
+		pthread_detach(data->philo[i].thread);
+		// if (pthread_mutex_destroy(&data->philo[i].mutex_fork) != 0)
+		// 	printf(RED"Error \n Mutex%d cannot be destroyed\n"WHITE, i);
+
 		i++;
 	}
 }
@@ -74,5 +86,7 @@ void	init_threads(int argc, char **argv)
 	data.philo = malloc(sizeof(t_philo) * data.num_philos);
 	init_vars_philos(&data);
 	pthread_creation(&data);
+	pthread_mutex_destroy(&data.mutex_print);
 	free(data.philo);
+//`	system("leaks philo");
 }

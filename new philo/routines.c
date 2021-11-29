@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 20:59:59 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/11/27 04:17:51 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2021/11/29 21:33:27 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,14 @@ void	*philo_routine(void *arg)
 	philo = (t_philo *)arg;
 	if (philo->num % 2 == 0)
 		philo->data->pair = 1;
-	while (philo->data->muerte == 0 || \
-		(philo->meals_num == philo->data->total_meals))
+	while (philo->data->muerte == 0)
 	{
 		routine_eat(philo);
+		if (philo->meals_num == philo->data->total_meals)
+		{
+			philo->data->meals_over = 1;
+			break;
+		}
 		routine_sleep(philo);
 		routine_think(philo);
 	}	
@@ -55,7 +59,7 @@ void	routine_eat(t_philo *philo)
 		eat_odd(philo, right_hand);
 	philo->last_eat = get_time() - philo->data->start_time;
 	print_eating(philo);
-	philo->meals_num++;
+	philo->meals_num += 1;
 	ft_usleep(philo->data->time_to_eat, philo->data);
 	pthread_mutex_unlock(&philo->mutex_fork);
 	pthread_mutex_unlock(&philo->data->philo[right_hand].mutex_fork);

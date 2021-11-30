@@ -6,16 +6,11 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:47:51 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/11/29 21:54:16 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2021/11/30 20:50:37 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void	leaks()
-{
-	system("leaks philo");
-}
 
 int	main(int argc, char **argv)
 {
@@ -28,6 +23,5 @@ int	main(int argc, char **argv)
 	}
 	else
 		init_threads(argc, argv);
-	atexit(leaks);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 20:59:59 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/11/29 21:33:27 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2021/11/30 21:25:43 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	*philo_routine(void *arg)
 		if (philo->meals_num == philo->data->total_meals)
 		{
 			philo->data->meals_over = 1;
-			break;
+			break ;
 		}
 		routine_sleep(philo);
 		routine_think(philo);
@@ -49,7 +49,7 @@ void	routine_eat(t_philo *philo)
 {
 	int			right_hand;
 
-	right_hand = philo->num;
+	right_hand = philo->num + 1;
 	if (right_hand == philo->data->num_philos)
 		right_hand = 0;
 	one_and_only(philo);
@@ -58,6 +58,7 @@ void	routine_eat(t_philo *philo)
 	else
 		eat_odd(philo, right_hand);
 	philo->last_eat = get_time() - philo->data->start_time;
+	printf("eats: %i %ld\n",philo->num, philo->last_eat);
 	print_eating(philo);
 	philo->meals_num += 1;
 	ft_usleep(philo->data->time_to_eat, philo->data);
@@ -72,7 +73,7 @@ void	routine_sleep(t_philo *philo)
 	time = get_time() - philo->data->start_time;
 	pthread_mutex_lock(&philo->data->mutex_print);
 	if (philo->data->muerte != 1)
-		printf(CYAN"%ldms Philo%d is sleeping\n"WHITE, time, philo->num);
+		printf(CYAN"%ldms Philo%d is sleeping\n"WHITE, time, philo->num + 1);
 	pthread_mutex_unlock(&philo->data->mutex_print);
 	ft_usleep(philo->data->time_to_sleep, philo->data);
 }
@@ -84,6 +85,6 @@ void	routine_think(t_philo *philo)
 	time = get_time() - philo->data->start_time;
 	pthread_mutex_lock(&philo->data->mutex_print);
 	if (philo->data->muerte != 1)
-		printf(GRAY"%ldms Philo%d is thinking\n"WHITE, time, philo->num);
+		printf(GRAY"%ldms Philo%d is thinking\n"WHITE, time, philo->num + 1);
 	pthread_mutex_unlock(&philo->data->mutex_print);
 }

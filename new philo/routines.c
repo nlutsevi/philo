@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 20:59:59 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/11/30 21:25:43 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2021/12/01 03:50:27 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	routine_eat(t_philo *philo)
 	else
 		eat_odd(philo, right_hand);
 	philo->last_eat = get_time() - philo->data->start_time;
-	printf("eats: %i %ld\n",philo->num, philo->last_eat);
 	print_eating(philo);
 	philo->meals_num += 1;
 	ft_usleep(philo->data->time_to_eat, philo->data);

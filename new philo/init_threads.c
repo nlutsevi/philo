@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:49:58 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/11/30 21:20:58 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2021/12/01 03:51:40 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	init_vars_philos(t_data *data)
 	data->start_time = get_time();
 	if (pthread_mutex_init(&data->mutex_print, NULL) != 0)
 		printf(RED"Error \n print_mutex cannot be created\n"WHITE);
+	if (pthread_mutex_init(&data->mutex_death, NULL) != 0)
+		printf(RED"Error \n death_mutex cannot be created\n"WHITE);
 	while (i < data->num_philos)
 	{
 		if (pthread_mutex_init(&data->philo[i].mutex_fork, NULL) != 0)
@@ -57,7 +59,9 @@ void	pthread_creation(t_data *data)
 			printf(RED"Error \n Thread%d cannot be created\n"WHITE, i);
 		i++;
 	}
+	pthread_mutex_lock(&data->mutex_death);
 	check_death(data);
+	pthread_mutex_unlock(&data->mutex_death);
 	i = 0;
 	while (i < data->num_philos && data->muerte == 0)
 	{
@@ -65,12 +69,6 @@ void	pthread_creation(t_data *data)
 			printf(RED"Error \n Thread%d cannot be joined\n"WHITE, i);
 		i++;
 	}
-	// i = 0;
-	// while (i < data->num_philos)
-	// {
-	// 	pthread_detach(data->philo[i].thread);
-	// 	i++;
-	// }
 }
 
 void	init_threads(int argc, char **argv)
@@ -82,5 +80,6 @@ void	init_threads(int argc, char **argv)
 	init_vars_philos(&data);
 	pthread_creation(&data);
 	pthread_mutex_destroy(&data.mutex_print);
+	pthread_mutex_destroy(&data.mutex_death);
 	free(data.philo);
 }

@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:51:03 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/12/02 20:23:18 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2021/12/02 22:40:54 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ typedef struct s_data
 	long int		time_to_eat;
 	long int		start_time;
 	pthread_mutex_t	mutex_print;
-	pthread_mutex_t	mutex_death;
 	t_philo			*philo;
 }	t_data;
 

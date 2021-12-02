@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 20:37:30 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/12/02 21:06:57 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2021/12/02 23:55:07 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_print_mutex(t_philo *philo, char *cmd)
 		else if (ft_strncmp(cmd, "sleep", 20) == 0)
 			printf(CYAN"%ldms Philo%d is sleeping\n"WHITE, time, philo->num);
 		else if (ft_strncmp(cmd, "think", 20) == 0)
-			printf(GRAY"%ldms Philo%d is thinking\n"WHITE, time, philo->num);	
+			printf(GRAY"%ldms Philo%d is thinking\n"WHITE, time, philo->num);
 	}
 	pthread_mutex_unlock(&philo->data->mutex_print);
 }

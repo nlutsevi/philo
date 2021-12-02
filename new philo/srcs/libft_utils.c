@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/04 01:03:03 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/12/02 20:02:50 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2021/12/02 23:54:46 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,14 @@ int	ft_atoi(const char *str)
 	return (res * is_neg);
 }
 
-int		ft_strncmp(const char *s1, const char *s2, size_t n)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
 	unsigned char	*ptr1;
 	unsigned char	*ptr2;
 	size_t			i;
 
-	ptr1 = (unsigned char*)s1;
-	ptr2 = (unsigned char*)s2;
+	ptr1 = (unsigned char *)s1;
+	ptr2 = (unsigned char *)s2;
 	i = 0;
 	while ((ptr1[i] || ptr2[i]) && i < n)
 	{

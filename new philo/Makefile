@@ -1,18 +1,18 @@
 NAME = philo
 
-SRCS=	eating.c \
-		libft_utils.c \
-		init_threads.c \
-		main.c \
-		routines.c \
-		time.c \
-		death.c
+SRCS=	srcs/eating.c \
+		srcs/libft_utils.c \
+		srcs/init_threads.c \
+		srcs/main.c \
+		srcs/routines.c \
+		srcs/time.c \
+		srcs/death.c
 
 OBJ= ${SRCS:.c=.o}
 
 CC = gcc
 RM = rm -rf
-CFLAGS = -Wall -Werror -Wextra #-g -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra
 
 .c.o:
 		${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
@@ -24,7 +24,7 @@ ${NAME}:	${OBJ}
 all:	${NAME}
 
 clean:
-		@${RM} ${OBJS} philo.dSYM
+		@${RM} ${OBJ} philo.dSYM
 
 fclean:	clean
 		@${RM} ${NAME}

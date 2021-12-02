@@ -1,7 +1,7 @@
 NAME = philo
 
 SRCS=	eating.c \
-		ft_atoi.c \
+		libft_utils.c \
 		init_threads.c \
 		main.c \
 		routines.c \

@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:49:58 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/12/01 03:51:40 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2021/12/02 19:58:20 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	init_vars_philos(t_data *data)
 		if (pthread_mutex_init(&data->philo[i].mutex_fork, NULL) != 0)
 			printf(RED"Error \n Mutex%d cannot be created\n"WHITE, i);
 		data->philo[i].last_eat = 0;
-		data->philo[i].num = i;
+		data->philo[i].num = i + 1;
 		data->philo[i].meals_num = 0;
 		i++;
 	}
@@ -81,5 +81,11 @@ void	init_threads(int argc, char **argv)
 	pthread_creation(&data);
 	pthread_mutex_destroy(&data.mutex_print);
 	pthread_mutex_destroy(&data.mutex_death);
+	int i = 0;
+	while (i < data.num_philos)
+	{
+		pthread_mutex_destroy(&data.philo[i].mutex_fork);
+		i++;
+	}
 	free(data.philo);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*   libft_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/04 01:03:03 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/08/04 01:20:26 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2021/12/02 20:02:50 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,22 @@ int	ft_atoi(const char *str)
 	while (str[i] >= '0' && str[i] <= '9')
 		res = (res * 10) + (str[i++] - '0');
 	return (res * is_neg);
+}
+
+int		ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	unsigned char	*ptr1;
+	unsigned char	*ptr2;
+	size_t			i;
+
+	ptr1 = (unsigned char*)s1;
+	ptr2 = (unsigned char*)s2;
+	i = 0;
+	while ((ptr1[i] || ptr2[i]) && i < n)
+	{
+		if (ptr1[i] != ptr2[i])
+			return (ptr1[i] - ptr2[i]);
+		i++;
+	}
+	return (0);
 }

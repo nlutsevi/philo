@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 20:59:59 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/12/02 23:52:01 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2021/12/04 21:49:35 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@ void	*philo_routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	philo->data->pair = 0;
+	philo->pair = 0;
 	if (philo->num % 2 == 0)
-		philo->data->pair = 1;
+		philo->pair = 1;
+	printf("philo_num: %i %i\n", philo->num, philo->pair);
 	while (philo->data->muerte == 0)
 	{
 		routine_eat(philo);
@@ -54,7 +55,7 @@ void	routine_eat(t_philo *philo)
 	if (right_hand == philo->data->num_philos)
 		right_hand = 0;
 	one_and_only(philo);
-	if (philo->data->pair)
+	if (philo->pair)
 		eat_pair(philo, right_hand);
 	else
 		eat_odd(philo, right_hand);

@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:49:58 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/12/04 21:50:54 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2021/12/05 19:35:12 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	init_vars(int argc, char **argv, t_data *data)
 {
 	data->muerte = 0;
 	data->meals_over = 0;
+	data->total_meals = 0;
+	data->start_time = get_time();
 	data->num_philos = ft_atoi(argv[1]);
 	data->time_to_die = ft_atoi(argv[2]);
 	data->time_to_eat = ft_atoi(argv[3]);
@@ -29,7 +31,6 @@ void	init_vars_philos(t_data *data)
 	int	i;
 
 	i = 0;
-	data->start_time = get_time();
 	if (pthread_mutex_init(&data->mutex_print, NULL) != 0)
 		printf(RED"Error \n print_mutex cannot be created\n"WHITE);
 	while (i < data->num_philos)
@@ -65,6 +66,12 @@ void	pthread_creation(t_data *data)
 			printf(RED"Error \n Thread%d cannot be joined\n"WHITE, i);
 		i++;
 	}
+	i = 0;
+	while (i < data->num_philos)
+	{
+		pthread_detach(data->philo[i].thread);
+		i++;
+	}
 }
 
 void	init_threads(int argc, char **argv)
@@ -83,5 +90,6 @@ void	init_threads(int argc, char **argv)
 		pthread_mutex_destroy(&data.philo[i].mutex_fork);
 		i++;
 	}
-	free(data.philo);
+	if (data.muerte == 1)
+		free(data.philo);
 }

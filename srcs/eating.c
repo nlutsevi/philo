@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 20:37:30 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/12/02 23:55:07 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2021/12/06 21:25:00 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,16 @@ void	ft_print_mutex(t_philo *philo, char *cmd)
 
 void	eat_pair(t_philo *philo, int right_hand)
 {
-	pthread_mutex_lock(&philo->mutex_fork);
-	ft_print_mutex(philo, "left_fork");
 	pthread_mutex_lock(&philo->data->philo[right_hand].mutex_fork);
 	ft_print_mutex(philo, "right_fork");
+	pthread_mutex_lock(&philo->mutex_fork);
+	ft_print_mutex(philo, "left_fork");
 }
 
 void	eat_odd(t_philo *philo, int right_hand)
 {
-	pthread_mutex_lock(&philo->data->philo[right_hand].mutex_fork);
-	ft_print_mutex(philo, "right_fork");
 	pthread_mutex_lock(&philo->mutex_fork);
 	ft_print_mutex(philo, "left_fork");
+	pthread_mutex_lock(&philo->data->philo[right_hand].mutex_fork);
+	ft_print_mutex(philo, "right_fork");
 }

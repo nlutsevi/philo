@@ -6,7 +6,7 @@
 /*   By: nlutsevi <nlutsevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:51:03 by nlutsevi          #+#    #+#             */
-/*   Updated: 2021/12/07 21:35:08 by nlutsevi         ###   ########.fr       */
+/*   Updated: 2021/12/13 23:16:16 by nlutsevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ typedef struct s_philo
 {
 	pthread_mutex_t	mutex_fork;
 	pthread_t		thread;
-	long int		start_time;
 	long int		last_eat;
+	int				pair;
 	int				num;
 	int				meals_num;
 	t_data			*data;
@@ -50,7 +50,6 @@ typedef struct s_data
 	int				meals_over;
 	int				muerte;
 	int				num_philos;
-	int				pair;
 	int				total_meals;
 	long int		time_to_die;
 	long int		time_to_sleep;
